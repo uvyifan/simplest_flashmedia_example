@@ -62,7 +62,10 @@ package {
 				public function onBWDone(): void {}
         // play a recorded stream on the server
         private function doVideo(nc:NetConnection):void {
+        		var clientobj=new Object();
+						clientobj.onMetaData=function(){};
             ns = new NetStream(nc);
+            ns.client=clientobj;
             ns.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 
             video = new Video(640,480);
