@@ -26,15 +26,16 @@ package {
 
     public class simplest_as3_rtmp_player extends Sprite
     {
-        var nc:NetConnection;
-        var ns:NetStream;
-		var video:Video;
+        private var nc:NetConnection;
+        private var ns:NetStream;
+				private var video:Video;
 
         public function simplest_as3_rtmp_player()
         {
             nc = new NetConnection();
             nc.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-			nc.connect("rtmp://localhost/live");
+            nc.client = this;
+						nc.connect("rtmp://localhost/live");  //set your push stream url
         }
 
 
@@ -58,7 +59,7 @@ package {
 	        }
         }
 
-
+				public function onBWDone(): void {}
         // play a recorded stream on the server
         private function doVideo(nc:NetConnection):void {
             ns = new NetStream(nc);
@@ -74,6 +75,8 @@ package {
         // create a playlist on the server
 		/*
         private function doPlaylist(nc:NetConnection):void {
+        		var clientobj = new Object();
+        		clientobj.onMetaData = function(){};
             ns = new NetStream(nc);
             ns.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 
